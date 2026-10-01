@@ -44,3 +44,27 @@ function isPalindrome(str) {
 
   return true;
 }
+
+const words = [
+  "listen",
+  "silent",
+  "enlist",
+  "google",
+  "elbow",
+  "below",
+  "cat",
+  "act",
+  "tac",
+  "dog",
+];
+
+console.log("Anagram Groups:");
+console.log(groupAnagrams(words));
+console.log("Empty list check:", groupAnagrams([]));
+
+console.log("\nPalindrome Checks:");
+console.log(
+  "'Was it a car or a cat I saw?' -------",
+  isPalindrome("Was it a car or a cat I saw?"),
+); // true
+console.log("'Hello, World!' ----------", isPalindrome("Hello, World!")); // false
