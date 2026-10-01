@@ -17,3 +17,30 @@ function groupAnagrams(words) {
 
   return Object.values(groupedMap).sort((a, b) => b.length - a.length);
 }
+
+function isPalindrome(str) {
+  let left = 0;
+  let right = str.length - 1;
+
+  // character is alphanumeric (a-z, A-Z, 0-9)
+  const isAlphaNumeric = (char) => /[a-zA-Z0-9]/.test(char);
+
+  while (left < right) {
+    while (left < right && !isAlphaNumeric(str[left])) {
+      left++;
+    }
+    while (left < right && !isAlphaNumeric(str[right])) {
+      right--;
+    }
+
+    // Compare characters ignoring case
+    if (str[left].toLowerCase() !== str[right].toLowerCase()) {
+      return false;
+    }
+
+    left++;
+    right--;
+  }
+
+  return true;
+}
