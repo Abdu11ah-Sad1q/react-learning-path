@@ -61,3 +61,26 @@ function borrowBook(bookId, memberName, borrowDate, books, loans) {
     loans: [...loans, newLoan],
   };
 }
+
+function returnBook(bookId, memberName, loans) {
+  const loanExists = loans.some(
+    (loan) => loan.bookId === bookId && loan.memberName === memberName,
+  );
+
+  if (!loanExists) {
+    return { success: false, error: "No matching loan record found." };
+  }
+
+  const updatedLoans = loans.filter(
+    (loan) => !(loan.bookId === bookId && loan.memberName === memberName),
+  );
+
+  return {
+    success: true,
+    loans: updatedLoans,
+  };
+}
+
+function getOverdueLoans(currentDateStr, loans) {
+  return loans.filter((loan) => currentDateStr > loan.dueDate);
+}
