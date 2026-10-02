@@ -1,5 +1,7 @@
 # Task 2.4: Message Composer
 
+![Message Composer Preview](./src/hero.png)
+
 A lightweight, responsive short-message composer built with React and Tailwind CSS.
 
 ## Features
@@ -15,16 +17,10 @@ A lightweight, responsive short-message composer built with React and Tailwind C
 ## Project Structure
 
 - `src/App.jsx`: Manages message state, composer inputs, validation, and post submissions.
-- `src/MessageList.jsx`: Receives messages array via props and renders the message feed with timestamps.
+- `src/components/MessageList.jsx`: Receives messages array via props and renders the message feed with timestamps.
 
 ## Getting Started
 
 1. Install dependencies:
-   \`\`\`bash
+   ```bash
    npm install
-   \`\`\`
-
-2. Run the development server:
-   \`\`\`bash
-   npm run dev
-   \`\`\`
