@@ -64,8 +64,39 @@ const App = () => {
     setCelsius(cValue.toFixed(1));
   };
 
+  const tempColors = {
+    cold: "bg-blue-400",
+    warm: "bg-green-300",
+    hot: "bg-orange-400",
+    default: "bg-gray-100",
+  };
+
+  const getBackgroundColor = (celsiusValue) => {
+    // if empty, typing incomplete signs, or invalid, keep default
+    if (
+      celsiusValue === "" ||
+      celsiusValue === "-" ||
+      celsiusValue === "." ||
+      isNaN(celsiusValue)
+    ) {
+      return tempColors.default;
+    }
+
+    const temp = parseFloat(celsiusValue);
+
+    if (temp < 0) {
+      return tempColors.cold;
+    } else if (temp <= 25) {
+      return tempColors.warm;
+    } else {
+      return tempColors.hot;
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100">
+    <div
+      className={`min-h-screen flex items-center justify-center p-4 transition-colors duration-300 ${getBackgroundColor(celsius)}`}
+    >
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
         <h1 className="text-xl font-bold text-center mb-6">
           Temperature Converter
