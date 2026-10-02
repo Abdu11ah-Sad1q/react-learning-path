@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import MessageList from './components/MessageList';
 
 function App() {
 
   const [text, setText] = useState('');
+  const [messages, setMessages] = useState([]);
+
+
   const getCounterColor = () => {
     const remaining = 280 - text.length;
 
@@ -13,6 +17,23 @@ function App() {
       return 'text-orange-500 font-medium';
     }
     return 'text-gray-500';
+  };
+
+  const handlePost = () => {
+
+    if (text.trim().length === 0 || text.length > 280) {
+      return;
+    }
+
+    const newMessage = {
+      id: Date.now(),
+      text: text.trim(),
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+
+    setMessages([newMessage, ...messages]);
+
+    setText('');
   };
 
   return (
@@ -36,6 +57,7 @@ function App() {
 
           {/* Button disabled directly based on text */}
           <button
+            onClick={handlePost}
             disabled={text.trim().length === 0 || text.length > 280}
             className="px-4 py-1.5 bg-blue-500 text-white rounded text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600"
           >
@@ -43,6 +65,8 @@ function App() {
           </button>
         </div>
       </div>
+      {/* Messages List */}
+      <MessageList messages={messages} />
     </div>
   );
 }
