@@ -1,7 +1,7 @@
 import { useState } from "react";
-import questions from "./data/questions";
+import questions from "../data/questions.jsx";
 
-function Quiz() {
+const Quiz = () => {
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState(0);

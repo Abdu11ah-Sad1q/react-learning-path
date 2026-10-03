@@ -1,9 +1,12 @@
-import React from 'react'
+import Quiz from "./components/Quiz";
 
-const App = () => {
+function App() {
   return (
-    <div>App</div>
-  )
+    <div className="p-6 max-w-md">
+      <h1 className="text-2xl font-bold mb-6">React Quiz</h1>
+      <Quiz />
+    </div>
+  );
 }
 
-export default App
+export default App;
