@@ -8,8 +8,8 @@ const labels = {
   5: "Great",
 };
 
-function StarRating(props) {
-  const {title} = props.title;
+const StarRating = (props) => {
+  const {title} = props;
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
 
