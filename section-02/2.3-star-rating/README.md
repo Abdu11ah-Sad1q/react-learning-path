@@ -1,16 +1,19 @@
-# React + Vite
+# 2.3 Star Rating
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A 5-star rating control built with React and Tailwind CSS.
+![Hero Image](src/assets/hero.png)
 
-Currently, two official plugins are available:
+## Features
+- Hover over a star to preview the rating (highlights that star and all before it)
+- Click a star to set the rating
+- Click the same star again to clear the rating
+- A label shows the chosen rating: Terrible, Bad, OK, Good, Great
+- The control is used 3 times (Food, Service, Price) and each works on its own
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## How to run
+npm install
+npm run dev
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Files
+- `src/StarRating.jsx` - the star rating component
+- `src/App.jsx` - uses the component three times
