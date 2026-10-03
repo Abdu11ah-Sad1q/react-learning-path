@@ -1,16 +1,25 @@
-# React + Vite
+# 2.5 Quiz
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A 5-question multiple-choice quiz built with React and Tailwind CSS.
+![Quiz Image](src/assets/image.png)
 
-Currently, two official plugins are available:
+## Features
+- One question at a time with 4 options
+- Shows if the answer was right, and the correct answer if it was wrong
+- Wrong answer turns red, right answer turns green
+- Answer cannot be changed after choosing
+- Next button is disabled until an answer is chosen
+- Progress indicator (Question 2 of 5)
+- Final score (for example 3 / 5) and a Restart button
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## How to run
+npm install
+npm run dev
 
-## React Compiler
+## Adding a question
+Add a new object in `src/questions.js`. No other code needs to change.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Files
+- `src/questions.js` - the quiz data
+- `src/Quiz.jsx` - the quiz component
+- `src/App.jsx` - shows the quiz
