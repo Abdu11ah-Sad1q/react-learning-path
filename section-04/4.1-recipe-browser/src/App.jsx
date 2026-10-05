@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
+import RecipeCard from "./components/RecipeCard";
+import RecipeDetail from "./components/RecipeDetail";
 
 const RECIPES_URL = "https://dummyjson.com/recipes";
 
-function App() {
+const App = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [attempt, setAttempt] = useState(0);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
 
   useEffect(() => {
     async function loadRecipes() {
@@ -35,6 +38,17 @@ function App() {
     setAttempt(attempt + 1);
   }
 
+  if (selectedRecipe) {
+    return (
+      <div className="p-4 max-w-5xl mx-auto">
+        <RecipeDetail
+          recipe={selectedRecipe}
+          onBack={() => setSelectedRecipe(null)}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="p-4 max-w-5xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Recipe Browser</h1>
@@ -53,9 +67,19 @@ function App() {
         </div>
       )}
 
-      {!loading && !error && <p>Loaded {recipes.length} recipes</p>}
+      {!loading && !error && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {recipes.map((recipe) => (
+            <RecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              onClick={() => setSelectedRecipe(recipe)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default App;
