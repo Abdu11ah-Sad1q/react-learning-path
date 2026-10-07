@@ -1,5 +1,7 @@
 import { useSelector } from "react-redux";
 import AddForm from "./AddForm";
+import SectionGroup from "./sectionGroup";
+import { SECTIONS } from "./sections";
 
 export default function App() {
   const items = useSelector((state) => state.groceries.items);
@@ -9,16 +11,16 @@ export default function App() {
       <h1 className="text-2xl font-bold mb-4">Grocery List</h1>
       <AddForm />
 
-      <ul className="mt-6 space-y-2">
-        {items.map((item) => (
-          <li key={item.id} className="flex justify-between border-b py-1">
-            <span>{item.name}</span>
-            <span>
-              {item.quantity} · {item.section}
-            </span>
-          </li>
-        ))}
-      </ul>
+      {SECTIONS.map((section) => {
+        const sectionItems = items.filter((item) => item.section === section);
+
+        // empty sections are hidden
+        if (sectionItems.length === 0) return null;
+
+        return (
+          <SectionGroup key={section} title={section} items={sectionItems} />
+        );
+      })}
     </div>
   );
 }

@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "./groceriesSlice";
-
-const SECTIONS = ["Fruit & veg", "Dairy", "Bakery", "Other"];
+import { SECTIONS } from "./sections";
 
 export default function AddForm() {
   const dispatch = useDispatch();
