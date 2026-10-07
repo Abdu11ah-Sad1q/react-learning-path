@@ -1,16 +1,45 @@
-# React + Vite
+# React High-Precision Stopwatch
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight, zero-drift stopwatch component built with React and Tailwind CSS. It features high-precision time tracking anchored to the real-world clock, pause/resume capability without time skew, and lap tracking with automatic best/worst lap highlighting.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Preview
 
-## React Compiler
+![Stopwatch Preview](src/assets/image.png)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Drift-Free Timing:** Uses `Date.now()` differences rather than simple interval increments to guarantee real-world precision even if browser execution slows down.
+- **Accurate Pause & Resume:** Employs an offset anchor calculation via `startTimeRef` to exclude paused intervals seamlessly.
+- **Lap Tracking:** Measures incremental lap times using a rolling checkpoint marker (`lastLapElapsedRef`).
+- **Dynamic Highlighting:** Automatically detects and colors the fastest lap (green) and slowest lap (red) once at least 3 laps have been logged.
+- **Reverse Chronological Laps:** Renders the newest lap on top for immediate visibility while keeping original sequential numbers intact.
+
+---
+
+## Architecture & Concepts
+
+### 1. State vs. Refs
+
+| Identifier          | Type       | Role            | Why This Choice?                                                                                     |
+| :------------------ | :--------- | :-------------- | :--------------------------------------------------------------------------------------------------- |
+| `elapsed`           | `useState` | UI Display      | Stores total elapsed milliseconds. Changing it triggers a UI re-render to display the ticking clock. |
+| `running`           | `useState` | Component State | Controls active/inactive state and toggles button labels.                                            |
+| `laps`              | `useState` | Lap History     | Array storing completed lap durations in milliseconds (`[newest, ..., oldest]`).                     |
+| `startTimeRef`      | `useRef`   | Internal Math   | Stores the shifted epoch anchor. Mutates without triggering redundant UI re-renders.                 |
+| `lastLapElapsedRef` | `useRef`   | Checkpoint      | Stores the total `elapsed` time of the most recent lap trigger to compute deltas.                    |
+
+---
+
+## Timing & Anchor Mechanics
+
+JavaScript timers (`setInterval`) drift over time due to event-loop delays. This component avoids drift by querying `Date.now()` on every tick:
+
+$$\text{Display Time} = \text{Date.now()} - \text{startTimeRef.current}$$
+
+### Pause & Resume Workflow
+
+When resuming after a pause, the anchor (`startTimeRef`) is shifted backward by the banked `elapsed` time so the idle duration is ignored:
