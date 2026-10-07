@@ -18,8 +18,15 @@ const groceriesSlice = createSlice({
         state.items.push({ id, name, quantity, section, bought: false });
       }
     },
+
+    toggleBought(state, action) {
+      const item = state.items.find((item) => item.id === action.payload);
+      if (item) {
+        item.bought = !item.bought;
+      }
+    },
   },
 });
 
-export const { addItem } = groceriesSlice.actions;
+export const { addItem, toggleBought } = groceriesSlice.actions;
 export default groceriesSlice.reducer;

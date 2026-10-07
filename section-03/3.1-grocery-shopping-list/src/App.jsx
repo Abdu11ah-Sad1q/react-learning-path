@@ -6,9 +6,15 @@ import { SECTIONS } from "./sections";
 export default function App() {
   const items = useSelector((state) => state.groceries.items);
 
+  // calculated every render, never stored
+  const boughtCount = items.filter((item) => item.bought).length;
+
   return (
     <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">Grocery List</h1>
+      <h1 className="text-2xl font-bold mb-1">Grocery List</h1>
+      <p className="text-gray-500 mb-4">
+        {boughtCount} of {items.length} items bought
+      </p>
       <AddForm />
 
       {SECTIONS.map((section) => {
