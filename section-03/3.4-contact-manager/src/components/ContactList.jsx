@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { toggleFavorite } from "../slices/ContactSlice.jsx";
 
-function ContactList() {
+function ContactList({ onEdit }) {
   const contacts = useSelector((state) => state.contacts.list);
   const dispatch = useDispatch();
 
@@ -21,12 +21,17 @@ function ContactList() {
           <p>{contact.phone}</p>
           <p>{contact.email}</p>
         </div>
-        <button
-          onClick={() => dispatch(toggleFavorite(contact.id))}
-          className="border px-2 py-1"
-        >
-          {contact.favorite ? "★ Favorite" : "☆ Favorite"}
-        </button>
+        <div className="flex gap-2">
+          <button
+            onClick={() => dispatch(toggleFavorite(contact.id))}
+            className="border px-2 py-1"
+          >
+            {contact.favorite ? "★ Favorite" : "☆ Favorite"}
+          </button>
+          <button onClick={() => onEdit(contact)} className="border px-2 py-1">
+            Edit
+          </button>
+        </div>
       </div>
     );
   }
@@ -35,12 +40,10 @@ function ContactList() {
     <div>
       <h2 className="text-lg font-bold mb-2">Favorites</h2>
       {favorites.length === 0 && <p className="mb-2">No favorites yet.</p>}
-      {/* favorites.map((contact) => renderContact(contact)) */}
       {favorites.map(renderContact)}
 
       <h2 className="text-lg font-bold mt-4 mb-2">Everyone else</h2>
       {others.length === 0 && <p>No other contacts.</p>}
-      {/* {others.map((contact) => renderContact(contact))} */}
       {others.map(renderContact)}
     </div>
   );

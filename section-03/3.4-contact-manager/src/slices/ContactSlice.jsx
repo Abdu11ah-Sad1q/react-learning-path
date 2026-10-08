@@ -39,8 +39,15 @@ const contactsSlice = createSlice({
     addContact(state, action) {
       state.list.push(action.payload);
     },
+    updateContact(state, action) {
+      const index = state.list.findIndex((c) => c.id === action.payload.id);
+      if (index !== -1) {
+        state.list[index] = action.payload;
+      }
+    },
   },
 });
 
-export const { toggleFavorite, addContact } = contactsSlice.actions;
+export const { toggleFavorite, addContact, updateContact } =
+  contactsSlice.actions;
 export default contactsSlice.reducer;

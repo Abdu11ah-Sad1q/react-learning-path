@@ -1,15 +1,21 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addContact } from "../slices/ContactSlice.jsx";
+import { updateContact } from "../slices/ContactSlice.jsx";
 
-function ContactForm() {
+function ContactForm({ contactToEdit, onDone }) {
   const contacts = useSelector((state) => state.contacts.list);
   const dispatch = useDispatch();
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [favorite, setFavorite] = useState(false);
+  const isEditing = contactToEdit !== null;
+
+  // If editing, start with the contact's values. Otherwise start empty.
+  const [name, setName] = useState(isEditing ? contactToEdit.name : "");
+  const [phone, setPhone] = useState(isEditing ? contactToEdit.phone : "");
+  const [email, setEmail] = useState(isEditing ? contactToEdit.email : "");
+  const [favorite, setFavorite] = useState(
+    isEditing ? contactToEdit.favorite : false,
+  );
   const [errors, setErrors] = useState({});
 
   function validate() {
@@ -19,15 +25,32 @@ function ContactForm() {
       newErrors.name = "Name is required.";
     }
 
+    /*
+    ^	start of the text
+    \d	one digit (0 to 9)
+    {8}	exactly 8 of them
+    $	end of the text */
+
     if (!/^\d{8}$/.test(phone)) {
       newErrors.phone = "Phone must be exactly 8 digits.";
     }
 
+    /*
+      ^	start
+      \S+	one or more characters that are not spaces
+      @	an at sign
+      \S+	one or more non-space characters
+      \.	a dot
+      \S+	one or more non-space characters
+      $	end 
+      */
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       newErrors.email = "Please enter a valid email.";
     } else {
       const emailExists = contacts.some(
-        (c) => c.email.toLowerCase() === email.trim().toLowerCase(),
+        (c) =>
+          c.email.toLowerCase() === email.trim().toLowerCase() &&
+          (!isEditing || c.id !== contactToEdit.id),
       );
       if (emailExists) {
         newErrors.email = "A contact with this email already exists.";
@@ -37,37 +60,60 @@ function ContactForm() {
     return newErrors;
   }
 
+  function clearForm() {
+    setName("");
+    setPhone("");
+    setEmail("");
+    setFavorite(false);
+    setErrors({});
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
 
     const newErrors = validate();
     setErrors(newErrors);
 
-    // If there is at least one error, stop here
     if (Object.keys(newErrors).length > 0) {
       return;
     }
 
-    dispatch(
-      addContact({
-        id: Date.now(),
-        name: name.trim(),
-        phone: phone,
-        email: email.trim(),
-        favorite: favorite,
-      }),
-    );
+    if (isEditing) {
+      // Keep the same id so it updates in place
+      dispatch(
+        updateContact({
+          id: contactToEdit.id,
+          name: name.trim(),
+          phone: phone,
+          email: email.trim(),
+          favorite: favorite,
+        }),
+      );
+      onDone(); // leave edit mode
+    } else {
+      dispatch(
+        addContact({
+          id: Date.now(),
+          name: name.trim(),
+          phone: phone,
+          email: email.trim(),
+          favorite: favorite,
+        }),
+      );
+      clearForm();
+    }
+  }
 
-    // Clear the form
-    setName("");
-    setPhone("");
-    setEmail("");
-    setFavorite(false);
+  function handleCancel() {
+    clearForm();
+    onDone(); // leave edit mode, nothing was saved
   }
 
   return (
     <form onSubmit={handleSubmit} className="border p-4 mb-6">
-      <h2 className="text-lg font-bold mb-2">Add contact</h2>
+      <h2 className="text-lg font-bold mb-2">
+        {isEditing ? "Edit contact" : "Add contact"}
+      </h2>
 
       <div className="mb-2">
         <input
@@ -112,9 +158,19 @@ function ContactForm() {
         Favorite
       </label>
 
-      <button type="submit" className="border px-3 py-1">
-        Add
+      <button type="submit" className="border px-3 py-1 mr-2">
+        {isEditing ? "Save changes" : "Add"}
       </button>
+
+      {isEditing && (
+        <button
+          type="button"
+          onClick={handleCancel}
+          className="border px-3 py-1"
+        >
+          Cancel
+        </button>
+      )}
     </form>
   );
 }
