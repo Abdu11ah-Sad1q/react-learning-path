@@ -36,8 +36,11 @@ const contactsSlice = createSlice({
         contact.favorite = !contact.favorite;
       }
     },
+    addContact(state, action) {
+      state.list.push(action.payload);
+    },
   },
 });
 
-export const { toggleFavorite } = contactsSlice.actions;
+export const { toggleFavorite, addContact } = contactsSlice.actions;
 export default contactsSlice.reducer;
