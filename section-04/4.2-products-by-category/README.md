@@ -1,16 +1,32 @@
-# React + Vite
+# Product Catalog Browser
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive React application that fetches product categories and displays filtered products using the [DummyJSON API](https://dummyjson.com/).
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Dynamic Category Loading:** Automatically retrieves available product categories on initial mount and selects the first one by default.
+- **Category Filtering:** Allows users to filter products by clicking category badges.
+- **Race Condition Handling:** Uses an `ignore` flag inside `useEffect` cleanup to ensure stale network requests do not overwrite newer user selections.
+- **Loading Indicators:** Provides visual feedback while product data is being retrieved.
+- **Responsive Layout:** Built with Tailwind CSS utility classes for flexible display across device screen sizes.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **Framework:** React (Hooks: `useState`, `useEffect`)
+- **Styling:** Tailwind CSS
+- **Data Source:** [DummyJSON Products API](https://dummyjson.com/docs/products)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   └── ProductCard.jsx      # Component to render individual product details
+├── App.jsx                  # Main application component with category & product fetching
+├── main.jsx                 # Application entry point
+└── index.css                # Global styles and Tailwind directives
+```
