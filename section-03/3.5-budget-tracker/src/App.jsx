@@ -3,15 +3,14 @@ import { useSelector } from "react-redux";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
 import Summary from "./components/Summary";
+import CategorySpending from "./components/CategorySpending";
 
 function App() {
   const allTransactions = useSelector((state) => state.transactions.items);
 
-  // current month in the format "2026-10"
   const currentMonth = new Date().toISOString().slice(0, 7);
   const [month, setMonth] = useState(currentMonth);
 
-  // keep only the transactions of the chosen month
   const monthTransactions = allTransactions.filter(
     (t) => t.date.slice(0, 7) === month,
   );
@@ -32,6 +31,7 @@ function App() {
 
       <Summary transactions={monthTransactions} />
       <TransactionForm />
+      <CategorySpending transactions={monthTransactions} />
       <TransactionList transactions={monthTransactions} />
     </div>
   );

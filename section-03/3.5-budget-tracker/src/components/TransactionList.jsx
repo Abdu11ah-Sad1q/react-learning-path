@@ -1,6 +1,11 @@
+import { useDispatch } from "react-redux";
+import { deleteTransaction } from "../slices/TransactionSlice";
+
 function TransactionList({ transactions }) {
+  const dispatch = useDispatch();
+
   return (
-    <div className="border p-4">
+    <div className="border p-4 mb-4">
       <h2 className="font-semibold mb-2">Transactions</h2>
 
       {transactions.length === 0 && (
@@ -17,12 +22,23 @@ function TransactionList({ transactions }) {
               {t.category} | {t.date}
             </p>
           </div>
-          <p
-            className={t.type === "income" ? "text-green-600" : "text-red-600"}
-          >
-            {t.type === "income" ? "+" : "-"}
-            {t.amount}
-          </p>
+
+          <div className="flex items-center gap-4">
+            <p
+              className={
+                t.type === "income" ? "text-green-600" : "text-red-600"
+              }
+            >
+              {t.type === "income" ? "+" : "-"}
+              {t.amount}
+            </p>
+            <button
+              onClick={() => dispatch(deleteTransaction(t.id))}
+              className="text-sm text-red-600 border border-red-600 px-2"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       ))}
     </div>
