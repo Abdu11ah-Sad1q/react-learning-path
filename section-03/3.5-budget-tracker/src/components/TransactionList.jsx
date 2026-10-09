@@ -1,13 +1,13 @@
-import { useSelector } from "react-redux";
-
-function TransactionList() {
-  const transactions = useSelector((state) => state.transactions.items);
-
+function TransactionList({ transactions }) {
   return (
     <div className="border p-4">
       <h2 className="font-semibold mb-2">Transactions</h2>
 
-      {transactions.length === 0 && <p>No transactions yet.</p>}
+      {transactions.length === 0 && (
+        <p className="text-gray-500">
+          No transactions for this month. Add one above!
+        </p>
+      )}
 
       {transactions.map((t) => (
         <div key={t.id} className="flex justify-between border-b py-2">
