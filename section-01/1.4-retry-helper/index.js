@@ -31,3 +31,23 @@ async function retry(fn, retries, delay = 500) {
     }
   }
 }
+
+// A fake network call that fails ~50% of the time
+async function fakeNetworkRequest() {
+  if (Math.random() < 0.5) {
+    throw new Error("503 Service Unavailable");
+  }
+  return "Data received successfully!";
+}
+
+// Running the test
+async function test() {
+  try {
+    const result = await retry(fakeNetworkRequest, 5, 500);
+    console.log("FINAL RESULT:", result);
+  } catch (error) {
+    console.log("ALL RETRIES FAILED. Last error:", error.message);
+  }
+}
+
+test();
