@@ -25,8 +25,34 @@ const groceriesSlice = createSlice({
         item.bought = !item.bought;
       }
     },
+
+    renameItem(state, action) {
+      const { id, name } = action.payload;
+      const newName = name.trim();
+
+      // ignore empty names
+      if (newName === "") {
+        alert("Item name cannot be empty.");
+        return;
+      }
+
+      // ignore a name that already belongs to a different item
+      const taken = state.items.some(
+        (item) =>
+          item.id !== id && item.name.toLowerCase() === newName.toLowerCase(),
+      );
+      if (taken) {
+        alert("That name is already taken by another item.");
+        return;
+      }
+
+      const item = state.items.find((item) => item.id === id);
+      if (item) {
+        item.name = newName;
+      }
+    },
   },
 });
 
-export const { addItem, toggleBought } = groceriesSlice.actions;
+export const { addItem, toggleBought, renameItem } = groceriesSlice.actions;
 export default groceriesSlice.reducer;

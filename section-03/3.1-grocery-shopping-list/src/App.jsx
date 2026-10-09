@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import AddForm from "./AddForm";
-import SectionGroup from "./sectionGroup";
+import AddForm from "./components/AddForm";
+import SectionGroup from "./components/SectionGroup";
 import { SECTIONS } from "./sections";
 
 export default function App() {
