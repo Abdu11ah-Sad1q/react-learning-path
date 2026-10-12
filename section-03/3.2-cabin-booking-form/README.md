@@ -1,16 +1,63 @@
-# React + Vite
+# Cabin Booking Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple booking form for a holiday cabin, built with React and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Pricing
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 1,200 NOK per night
+- 500 NOK cleaning fee
+- Stays of 7 nights or more get 10% off the nightly price (the cleaning fee is not discounted)
 
-## React Compiler
+| Stay     | Total     |
+| -------- | --------- |
+| 3 nights | 4,100 NOK |
+| 7 nights | 8,060 NOK |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Fields: name, email, check-in, check-out, guests (1-6) and an optional message
+- Validation rules:
+  - Check-in cannot be in the past
+  - Check-out must be after check-in
+  - Maximum stay is 14 nights
+  - Guests must be between 1 and 6
+- Errors appear under a field after the user leaves it
+- Live price summary (nights x price, cleaning fee, total)
+- Book button is disabled until the form is valid
+- Confirmation screen with dates, nights, guests and total
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Screenshots
+
+![Booking form](src/assets/image.png)
+
+![Booking confirmation](src/assets/image2.png)
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
+```
+
+Then open the local URL shown in the terminal.
+
+## Project Structure
+
+```
+src/
+  BookingForm.jsx   # The whole form: state, validation, price and confirmation
+  App.jsx           # Renders <BookingForm />
+```
+
+## How It Works
+
+- State is kept with `useState`: `values`, `touched` and `booked`.
+- `errors`, `nights`, `price` and `isValid` are calculated on every render instead of being stored.
+- `validate()` and `calculatePrice()` are plain functions outside the component.
+- Redux was not used because the state is local to a single form.
+
+## Tech Stack
+
+- React
+- Tailwind CSS
+- Vite
