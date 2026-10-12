@@ -45,7 +45,7 @@ Then open the local URL shown in the terminal.
 
 ```
 src/
-  BookingForm.jsx   # The whole form: state, validation, price and confirmation
+  components/BookingForm.jsx   # The whole form: state, validation, price and confirmation
   App.jsx           # Renders <BookingForm />
 ```
 
