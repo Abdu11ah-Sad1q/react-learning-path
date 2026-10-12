@@ -1,16 +1,44 @@
-# React + Vite
+# Kanban Board
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple task board (React + Tailwind) with To do, Doing and Done columns.
 
-Currently, two official plugins are available:
+## Run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```
+npm install
+npm run dev
+```
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Add a card (title required, description optional) to To do
+- Move cards left/right between columns
+- Delete a card (asks for confirmation)
+- Each column shows its card count
+- Doing holds at most 3 cards
 
-## Expanding the ESLint configuration
+## Where the data lives
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
++-----------------------------------------------+
+| App                                           |
+|   cards = [ {id, title, description, column} ]|   <- the only place data is stored
+|   addCard(), moveCard(), deleteCard()         |
++-----------------------------------------------+
+        |  filter by column + functions as props
+        v
++---------+     +---------+     +---------+
+| Column  |     | Column  |     | Column  |
+| To do   |     | Doing   |     | Done    |
+| (2)     |     | (1)     |     | (0)     |
++---------+     +---------+     +---------+
+     |               |
+     v               v
+   Card            Card        buttons call the functions
+                               from App, and App updates
+                               `cards` (data goes down,
+                               events go back up)
+```
+
+Each column gets only the cards whose `column` matches its name, so the
+count in the header is just `cards.length` and is always correct.

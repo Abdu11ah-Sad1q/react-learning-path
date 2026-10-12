@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Card from "./Card";
-export default function Column({ name, cards, onAdd, onMove }) {
+export default function Column({ name, cards, onAdd, onMove, onDelete }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -40,7 +40,7 @@ export default function Column({ name, cards, onAdd, onMove }) {
 
       <div className="flex flex-col gap-2">
         {cards.map((card) => (
-          <Card key={card.id} card={card} columnName={name} onMove={onMove} />
+          <Card key={card.id} card={card} columnName={name} onMove={onMove}  onDelete={onDelete} />
         ))}
       </div>
     </div>

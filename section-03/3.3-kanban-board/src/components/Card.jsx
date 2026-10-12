@@ -1,4 +1,4 @@
-export default function Card({ card, columnName, onMove }) {
+export default function Card({ card, columnName, onMove, onDelete }) {
   return (
     <div className="bg-white rounded p-2 shadow">
       <p className="font-medium">{card.title}</p>
@@ -25,6 +25,12 @@ export default function Card({ card, columnName, onMove }) {
             →
           </button>
         )}
+        <button
+          className="border rounded px-2 text-red-600 ml-auto"
+          onClick={() => onDelete(card.id)}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

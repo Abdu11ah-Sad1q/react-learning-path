@@ -28,6 +28,12 @@ export default function App() {
     setCards(cards.map((c) => (c.id === id ? { ...c, column: target } : c)));
   }
 
+  function deleteCard(id) {
+    if (window.confirm("Delete this card?")) {
+      setCards(cards.filter((c) => c.id !== id));
+    }
+  }
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Kanban Board</h1>
@@ -44,6 +50,7 @@ export default function App() {
             cards={cards.filter((c) => c.column === name)}
             onAdd={addCard}
             onMove={moveCard}
+            onDelete={deleteCard}
           />
         ))}
       </div>
