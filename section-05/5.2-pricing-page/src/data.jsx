@@ -6,6 +6,8 @@ export const plans = [
     cardColor: "bg-teal-800",
     textColor: "text-teal-800",
     features: ["3 projects", "1 team member", "Basic reports", "Email support"],
+    // same order as comparisonLabels below
+    details: ["3", "1", "2 GB", "Email", "No"],
   },
   {
     id: "team",
@@ -19,6 +21,7 @@ export const plans = [
       "Weekly reports",
       "Chat support",
     ],
+    details: ["20", "5", "20 GB", "Chat", "Yes"],
   },
   {
     id: "business",
@@ -32,31 +35,17 @@ export const plans = [
       "Custom reports",
       "Phone support",
     ],
+    details: ["Unlimited", "50", "200 GB", "Phone", "Yes"],
   },
 ];
 
-// one row per feature, values are matched by plan id
-export const comparisonRows = [
-  {
-    label: "Projects",
-    values: { starter: "3", team: "20", business: "Unlimited" },
-  },
-  {
-    label: "Team members",
-    values: { starter: "1", team: "5", business: "50" },
-  },
-  {
-    label: "Storage",
-    values: { starter: "2 GB", team: "20 GB", business: "200 GB" },
-  },
-  {
-    label: "Support",
-    values: { starter: "Email", team: "Chat", business: "Phone" },
-  },
-  {
-    label: "Custom domain",
-    values: { starter: "No", team: "Yes", business: "Yes" },
-  },
+// the row names of the comparison table
+export const comparisonLabels = [
+  "Projects",
+  "Team members",
+  "Storage",
+  "Support",
+  "Custom domain",
 ];
 
 export const testimonials = [

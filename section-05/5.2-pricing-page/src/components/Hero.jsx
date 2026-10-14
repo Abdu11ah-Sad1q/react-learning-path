@@ -1,10 +1,14 @@
 import Navbar from "./Navbar";
+import heroImage from "../assets/hero.avif";
 
 function Hero() {
   return (
-    <section className="bg-cover bg-center min-h-96 bg-[url('https://unsplash.com/photos/person-writing-on-notebook-R8kRvIvZ0IY')]">
+    <section
+      className="bg-cover bg-center min-h-screen bg-no-repeat"
+      style={{ backgroundImage: "url(" + heroImage + ")" }}
+    >
       {/* light pink layer on top of the photo so the text stays readable */}
-      <div className="bg-pink-100/80 min-h-96">
+      <div className=" min-h-96">
         <Navbar />
 
         <div className="flex flex-col gap-6 px-10 py-16">
