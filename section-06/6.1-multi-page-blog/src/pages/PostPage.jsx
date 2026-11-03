@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getJson } from "../api";
+import { useLanguage } from "../LanguageContext";
 
 function PostPage() {
-  const { id } = useParams(); // the 5 in /posts/5
+  const { id } = useParams();
+  const { t } = useLanguage();
   const [post, setPost] = useState(null);
   const [author, setAuthor] = useState(null);
   const [comments, setComments] = useState([]);
@@ -32,11 +34,11 @@ function PostPage() {
   }, [id]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p>{t("loading")}</p>;
   }
 
   if (!post) {
-    return <h1 className="text-2xl font-bold">Post not found</h1>;
+    return <h1 className="text-2xl font-bold">{t("postNotFound")}</h1>;
   }
 
   return (
@@ -45,7 +47,7 @@ function PostPage() {
 
       {author && (
         <p className="mb-4">
-          By{" "}
+          {t("by")}{" "}
           <Link to={"/authors/" + author.id} className="text-blue-600">
             {author.firstName} {author.lastName}
           </Link>
@@ -54,8 +56,10 @@ function PostPage() {
 
       <p className="mb-6">{post.body}</p>
 
-      <h2 className="text-xl font-bold mb-2">Comments ({comments.length})</h2>
-      {comments.length === 0 && <p>No comments yet.</p>}
+      <h2 className="text-xl font-bold mb-2">
+        {t("comments")} ({comments.length})
+      </h2>
+      {comments.length === 0 && <p>{t("noComments")}</p>}
       {comments.map((comment) => (
         <div key={comment.id} className="border rounded p-3 mb-2">
           <p className="font-bold">{comment.user.username}</p>

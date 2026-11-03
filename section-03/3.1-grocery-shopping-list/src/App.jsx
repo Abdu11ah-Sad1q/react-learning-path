@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import AddForm from "./components/AddForm";
-import SectionGroup from "./components/SectionGroup";
+import SectionGroup from "./components/sectionGroup";
 import { SECTIONS } from "./sections";
 
 export default function App() {
@@ -30,3 +30,4 @@ export default function App() {
     </div>
   );
 }
+

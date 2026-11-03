@@ -1,6 +1,7 @@
 # Username Availability Checker
 
 A React component that checks if a username is taken in real time.
+![App Preview](src/assets/image.png)
 
 ## How It Works
 

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getJson } from "../api";
+import { useLanguage } from "../LanguageContext";
 import PostCard from "../components/PostCard";
 
 function AuthorPage() {
-  const { id } = useParams(); // the 3 in /authors/3
+  const { id } = useParams();
+  const { t } = useLanguage();
   const [author, setAuthor] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,11 +32,11 @@ function AuthorPage() {
   }, [id]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p>{t("loading")}</p>;
   }
 
   if (!author) {
-    return <h1 className="text-2xl font-bold">Author not found</h1>;
+    return <h1 className="text-2xl font-bold">{t("authorNotFound")}</h1>;
   }
 
   return (
@@ -46,8 +48,8 @@ function AuthorPage() {
         @{author.username} - {author.email}
       </p>
 
-      <h2 className="text-xl font-bold mb-2">Posts by this author</h2>
-      {posts.length === 0 && <p>This author has no posts.</p>}
+      <h2 className="text-xl font-bold mb-2">{t("postsByAuthor")}</h2>
+      {posts.length === 0 && <p>{t("noAuthorPosts")}</p>}
       {posts.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}

@@ -15,13 +15,13 @@ async function getRandomQuote() {
 }
 
 export default function App() {
-  // ----- Part A: quote list -----
+  //  Part A - quote list
   const [quotes, setQuotes] = useState([]);
   const [total, setTotal] = useState(null);
   const [loading, setLoading] = useState(true); // true: first load starts on mount
   const [error, setError] = useState("");
 
-  // ----- Part B: featured quote -----
+  // Part B - featured quote
   const [featured, setFeatured] = useState(null);
   const [paused, setPaused] = useState(false);
   const [tabHidden, setTabHidden] = useState(document.hidden);

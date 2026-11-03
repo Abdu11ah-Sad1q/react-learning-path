@@ -10,15 +10,19 @@ const expenses = [
 
 function getTotalByCategory(items) {
   if (!items || items.length === 0) return {};
-
   /*
   for (const item of items) {
   totals[item.category] = (totals[item.category] || 0) + item.amount;
   } 
   */
-
   return items.reduce((totals, item) => {
     totals[item.category] = (totals[item.category] || 0) + item.amount;
+    totals["Food"] = (totals["Food"] || 0) + item.amount;
+    /*
+      120 = 0 + 120 
+      200 = 120 + 80 
+      400 = 200 + 200
+    */
     return totals;
   }, {});
 }

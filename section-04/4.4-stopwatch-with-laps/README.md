@@ -6,8 +6,6 @@ A lightweight, zero-drift stopwatch component built with React and Tailwind CSS.
 
 ## Preview
 
-![Stopwatch Preview](src/assets/image.png)
-
 ---
 
 ## Features

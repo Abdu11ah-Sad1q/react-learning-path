@@ -31,6 +31,7 @@ function formatTime(ms) {
 | **Resume (Start)**  | 12:01:00                  | 10s                | 12:00:50 (shifted)      | 00:10.00 | Recalculate anchor: `Date.now() - elapsed` = `12:01:00 - 10s`.    |
 | **Running (+1s)**   | 12:01:01                  | 11s                | 12:00:50                | 00:11.00 | Active tick: `12:01:01 - 12:00:50 = 11s`. 50s rest gap omitted.   |
 */
+
 export default function Stopwatch() {
   const [elapsed, setElapsed] = useState(0);
   const [running, setRunning] = useState(false);

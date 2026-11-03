@@ -1,7 +1,7 @@
 # Quote Wall
 
 A small React + Tailwind app that shows a list of quotes with a "Load more" button and a featured quote that changes by itself.
-
+![Preview](src/assets/image.png)
 Data comes from the [DummyJSON Quotes API](https://dummyjson.com/docs/quotes).
 
 ## Features

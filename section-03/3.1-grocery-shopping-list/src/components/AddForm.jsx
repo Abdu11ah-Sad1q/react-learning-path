@@ -27,6 +27,7 @@ export default function AddForm() {
     }
 
     dispatch(
+      // Output: "c9a646d3-9c61-4cd7-9f4a-9c768652d5b6"
       addItem({
         id: crypto.randomUUID(),
         name: name.trim(),
@@ -74,3 +75,42 @@ export default function AddForm() {
     </form>
   );
 }
+
+/*
+Tumhare rules ka check
+
+New add:
+
+past ← purana present (add)
+present = new
+future = clear
+
+Undo: 
+
+future ← purana present (aage add)
+present = past ka aakhri item
+
+Redo: 
+
+past ← purana present (add)
+present = future ka pehla item
+
+(Redo mein future se woh ek item nikal jata hai, baaki rehte hain.)
+
+Future clear kyun karte hain? Asaan alfaaz mein
+
+Chrome wali example yaad karo.
+
+Tum ye websites par gaye: Google → YouTube → Facebook
+
+Tumne Back dabaya, ab tum YouTube par ho. Forward mein Facebook hai.
+
+past: [Google]   present: YouTube   future: [Facebook]
+Ab tum YouTube se Instagram khol dete ho. Ab tumhari kahani yeh ban gayi:
+
+Google → YouTube → Instagram
+
+Facebook is nayi kahani ka hissa hi nahi hai.
+Agar Forward dabao to Facebook aaye, yeh ajeeb aur ghalat hoga,
+kyunke tum Instagram par ho,
+aur Instagram ke baad Facebook kabhi aaya hi nahi. */

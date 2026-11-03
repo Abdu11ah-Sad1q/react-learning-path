@@ -28,6 +28,14 @@ export default function App() {
             signal: controller.signal,
           },
         );
+
+        {
+          /*This tells the browser:
+         "Keep an eye on this token.
+         If someone pulls the lever on this controller,
+         cut the wire on this HTTP request immediately." */
+        }
+
         const data = await res.json();
         const isTaken = data.users.some((user) => user.username === text);
         setResult({ text, status: isTaken ? "taken" : "available" });
