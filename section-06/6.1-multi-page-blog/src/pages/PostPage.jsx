@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getJson } from "../api";
 import { useLanguage } from "../LanguageContext";
+import { useAuth } from "../AuthContext";
+import { getReadingList, saveReadingList } from "../readingList";
 
 function PostPage() {
   const { id } = useParams();
@@ -10,6 +12,27 @@ function PostPage() {
   const [author, setAuthor] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
+  const [saved, setSaved] = useState(false);
+
+  // check if this post is already in the user's reading list
+  useEffect(() => {
+    if (user) {
+      setSaved(getReadingList(user).includes(Number(id)));
+    }
+  }, [user, id]);
+
+  function toggleSaved() {
+    const list = getReadingList(user);
+    let newList;
+    if (list.includes(post.id)) {
+      newList = list.filter((postId) => postId !== post.id); // remove it
+    } else {
+      newList = [...list, post.id]; // add it
+    }
+    saveReadingList(user, newList);
+    setSaved(!saved);
+  }
 
   useEffect(() => {
     async function loadData() {

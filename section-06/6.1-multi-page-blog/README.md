@@ -1,37 +1,20 @@
-# My Blog
+## Task 6.2: Login and language
 
-A small blog built with React, Tailwind CSS and react-router-dom.
-Data comes from https://dummyjson.com (posts, users, comments).
+**Language:** All fixed texts are in `src/translations.js`, one object
+for English (`en`) and one for Norwegian (`no`). `LanguageContext`
+keeps the chosen language and saves it in `localStorage`, so it stays
+after a refresh. Pages call `t("key")` to get the text. To add a new
+text, I add the same key in both objects. The language logic does not
+change. If a Norwegian text is missing, English is used. Post titles and
+content come from the API, so they stay as they are.
 
-## Run it
+**Login:** `AuthContext` keeps the username (saved in `localStorage`).
+Any username with the password `test123` logs in. This is fake login for
+learning only and is not secure.
 
-npm install
-npm run dev
+**Protected page:** `/reading-list` is wrapped in `ProtectedRoute`. If
+nobody is logged in, it sends the user to `/login` and remembers the
+page in the router state. After login, the user is taken back there.
 
-## Pages
-
-- `/` - latest 5 posts
-- `/posts` - all posts
-- `/posts/5` - one post with its comments
-- `/authors/3` - one author with their posts
-- anything else - "Page not found"
-
-## My approach
-
-**Pages:** I used react-router-dom. A `Layout` component holds the
-header and footer once, and the current page is shown inside it using
-`<Outlet />`. So every page, including the "not found" ones, has the
-same header and footer. Dynamic pages use `:id` in the route and
-`useParams()` to read the number.
-
-**Shared data:** All API calls go through one function, `getJson`, in
-`src/api.js`. It returns `null` when the item does not exist. Each page
-fetches what it needs with `useEffect` and keeps it in `useState`.
-`PostCard` is a shared component used on Home, All Posts and Author
-pages.
-
-**Not found:** If `getJson` returns `null` for a post or author, the page
-shows "Post not found" or "Author not found" inside the normal layout.
-
-**Refresh:** The Vite dev server sends all addresses to `index.html`, so
-refreshing `/posts/5` still works. For Vercel I added `vercel.json`.
+**Reading list:** Logged-in users get a save button on each post page.
+The post ids are saved in `localStorage`, one list per username.
